@@ -6,8 +6,8 @@ class Solution:
             sub = []
             for j in range(n):
                 if i >> j & 1:
-                    sub.append(nums[j])
+                   sub.append(nums[j])
+            
             ans.append(sub)
             
-        
         return ans
