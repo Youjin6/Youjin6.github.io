@@ -1,23 +1,21 @@
 class Solution:
-    def combinationSum(self, c: List[int], target: int) -> List[List[int]]:
-        ans = []
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        n = len(candidates)
         path = []
+        ans = []
         
-        def dfs(u, remain):
+        def dfs(index, remain):
             if remain == 0:
                 ans.append(path[:])
-            if remain < 0:
                 return
-            if u == len(c):
+            elif remain < 0 or index == n:
                 return
-            
-            path.append(c[u])
-            dfs(u, remain-c[u])
-            
-            path.pop()
-            dfs(u + 1, remain)
-        dfs(0, target)
-        ans = [list(t) for t in set(tuple(_) for _ in ans)]
-        return ans
+            else:
+                path.append(candidates[index])
+                dfs(index, remain - candidates[index])
+                path.pop()
+                dfs(index + 1, remain)
         
-            
+        dfs(0, target)
+        return ans
+                
