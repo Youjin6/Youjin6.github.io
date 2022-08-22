@@ -30,12 +30,16 @@ class Solution:
         if not n or not m:
             return 0
         uf = UnionFind(grid)
-        
+        dx = [-1, 1, 0, 0]
+        dy = [0, 0, -1, 1]
         for i in range(n):
             for j in range(m):
                 if grid[i][j] == "1":
                     grid[i][j] = "0"
-                    for x, y in [(i - 1, j),(i + 1, j),(i, j + 1),(i, j - 1)]:
+                    for k in range(4):
+                        x = i + dx[k]
+                        y = j + dy[k]
+                    
                         if x in range(n) and y in range(m) and grid[x][y] == "1":
                             uf.union(m * i + j, m * x + y)
         return uf.getCount()
