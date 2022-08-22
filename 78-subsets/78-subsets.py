@@ -1,19 +1,13 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        res = []
-        path = []
         n = len(nums)
+        res = []
+        for i in range(1 << n):
+            sub = []
+            for j in range(n):
+                if i >> j & 1:
+                    sub.append(nums[j])
         
-        def dfs(u):
-            if u == n:
-                res.append(path[:])
-                return
-            
-            path.append(nums[u])
-            dfs(u + 1)
-            path.pop()
-            dfs(u + 1)
+            res.append(sub)
         
-        dfs(0)
         return res
-    
