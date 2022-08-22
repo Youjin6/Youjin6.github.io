@@ -5,25 +5,32 @@ class Solution:
         dx = [-1, 1, 0, 0]
         dy = [0, 0, -1, 1]
         
-        def dfs(x, y):
-            grid[x][y] = "0"
-            for i in range(4):
-                a = x + dx[i]
-                b = y + dy[i]
-                
-                
-                if 0 <= a < n and 0 <= b < m and grid[a][b] == "1":
-                    dfs(a, b)
+        def bfs(x, y):
+            
+            q = deque([(x, y)])
+            while q:
+                row, col = q.popleft()
+                for i in range(4):
+                    a = row + dx[i]
+                    b = col + dy[i]
+
+
+                    if 0 <= a < n and 0 <= b < m and grid[a][b] == "1":
+                        grid[a][b] = "0"
+                        q.append((a, b))
         
         ans = 0
         for i in range(n):
             for j in range(m):
                 if grid[i][j] == '1':
-                    dfs(i, j)
+                    bfs(i, j)
                     ans += 1
         return ans
         
        
-        
+"""
+TC: O(nm) | at most it will search each grid once
+SC: O(nm) | in case that the grid map is filled with land 
+"""
        
                 
