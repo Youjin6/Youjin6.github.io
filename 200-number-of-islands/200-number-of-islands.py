@@ -13,8 +13,7 @@ class Solution:
                 for i in range(4):
                     a = row + dx[i]
                     b = col + dy[i]
-
-
+                    
                     if 0 <= a < n and 0 <= b < m and grid[a][b] == "1":
                         grid[a][b] = "0"
                         q.append((a, b))
@@ -23,6 +22,7 @@ class Solution:
         for i in range(n):
             for j in range(m):
                 if grid[i][j] == '1':
+                    grid[i][j] = "0"
                     bfs(i, j)
                     ans += 1
         return ans
@@ -30,7 +30,7 @@ class Solution:
        
 """
 TC: O(nm) | at most it will search each grid once
-SC: O(nm) | in case that the grid map is filled with land 
+SC: O(min(M,N)) | because in worst case where the grid is filled with lands, the size of queue can grow up to min(M,NM,N)
 """
        
                 
