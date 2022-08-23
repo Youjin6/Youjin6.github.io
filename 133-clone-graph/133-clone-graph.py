@@ -8,4 +8,24 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        return copy.deepcopy(node)
+        if not node:
+            return None
+        
+        dic = {}
+        def dfs(node):
+            if node not in dic:
+                dic[node] = Node(node.val)
+                for neighbor in node.neighbors:
+                    if neighbor not in dic:
+                        dfs(neighbor)
+        
+        dfs(node)
+        
+        for n in dic:
+            for nei in n.neighbors:
+                dic[n].neighbors.append(dic[nei])
+                
+        return dic[node]
+        
+    
+    
