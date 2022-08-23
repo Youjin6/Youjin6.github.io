@@ -12,20 +12,18 @@ class Solution:
             return None
         
         dic = {}
+        
         def dfs(node):
             if node not in dic:
                 dic[node] = Node(node.val)
-                for neighbor in node.neighbors:
-                    if neighbor not in dic:
-                        dfs(neighbor)
-        
+                
+                for nei in node.neighbors:
+                    if nei not in dic:
+                        dfs(nei)
         dfs(node)
         
-        for n in dic:
-            for nei in n.neighbors:
-                dic[n].neighbors.append(dic[nei])
-                
-        return dic[node]
+        for k, v in dic.items():
+            for nei in k.neighbors:
+                v.neighbors.append(dic[nei])
         
-    
-    
+        return dic[node]
