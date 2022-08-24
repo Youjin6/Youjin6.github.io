@@ -10,21 +10,19 @@ class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
         if not node:
             return None
-        dic = {}
         
-        def dfs(node):
-            if node not in dic:
-                dic[node] = Node(node.val)
-                for nei in node.neighbors:
-                    if nei not in dic:
-                        dfs(nei)
-        dfs(node)
+        q = deque([node])
+        visited = {}
+        visited[node] = Node(node.val, [])
         
-        # copy the edges(neighbors)
-        for k, v in dic.items():
-            for nei in k.neighbors:
-                v.neighbors.append(dic[nei])
+        while q:
+            n = q.popleft()
+            for nei in n.neighbors:
+                if nei not in visited:
+                    visited[nei] = Node(nei.val, [])
+                    q.append(nei)
+                visited[n].neighbors.append(visited[nei])
         
-        return dic[node]
-        
+        return visited[node]
+                    
         
