@@ -11,18 +11,16 @@ class Solution:
         if not node:
             return None
         
+        v = {}
         q = deque([node])
-        visited = {}
-        visited[node] = Node(node.val, [])
+        v[node] = Node(node.val)
         
         while q:
-            n = q.popleft()
-            for nei in n.neighbors:
-                if nei not in visited:
-                    visited[nei] = Node(nei.val, [])
+            front = q.popleft()
+            for nei in front.neighbors:
+                if nei not in v:
                     q.append(nei)
-                visited[n].neighbors.append(visited[nei])
+                    v[nei] = Node(nei.val)
+                v[front].neighbors.append(v[nei])
         
-        return visited[node]
-                    
-        
+        return v[node]
