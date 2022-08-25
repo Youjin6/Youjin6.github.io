@@ -23,21 +23,20 @@ class Solution:
             
             
         # top, bottom
-        for i in range(m - 1):
+        for i in range(m):
             dfs(0, i)
             dfs(n - 1, i)
         
         # left, right
-        for i in range(n - 1):
+        for i in range(n):
             dfs(i, 0)
             dfs(i, m - 1)
             
         
-        for i in range(1, n - 1):
-            for j in range(1, m - 1):
+        for i in range(n):
+            for j in range(m):
                 if not visited[i][j]:
                     board[i][j] = 'X'
-        return board
         
         
             
