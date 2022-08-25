@@ -3,41 +3,41 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        if board == []:
-            return
-
-        # 逆向思维，判断跟边界连接的O，除了这些，剩下的全都为X
-
-        dx = [0, 0, 1, -1]
-        dy = [1, -1, 0, 0]
-
-        m = len(board)
-        n = len(board[0])
-
-        visited = [[0 for j in range(n)] for i in range(m)]
-
-
+        n = len(board)
+        if not n:
+            return [[]]
+        m = len(board[0])
+        visited = [[False for _ in range(m)] for _ in range(n)]
+        dx = [-1, 1, 0, 0]
+        dy = [0, 0, -1, 1]
+        
         def dfs(x, y):
-            visited[x][y] = 1
+            if visited[x][y] or board[x][y] != 'O':
+                return
+            visited[x][y] = True
             for i in range(4):
-                next_x = x + dx[i]
-                next_y = y + dy[i]
-                if next_x >= 0 and next_y >= 0 and next_x < m and next_y < n and board[next_x][next_y] == 'O' and visited[next_x][next_y] == 0:
-                    dfs(next_x, next_y)
-
-        for i in range(m):
-            if board[i][0] == 'O' and visited[i][0] == 0:
-                dfs(i, 0)
-            if board[i][n-1] == 'O' and visited[i][n-1] == 0:
-                dfs(i, n-1)
-
-        for j in range(n):
-            if board[0][j] == 'O' and visited[0][j] == 0:
-                dfs(0, j)
-            if board[m-1][j] == 'O' and visited[m-1][j] == 0:
-                dfs(m-1, j)
-
-        for i in range(m):
-            for j in range(n):
-                if visited[i][j] == 0:
+                a = x + dx[i]
+                b = y + dy[i]
+                if a in range(n) and b in range(m) and board[a][b] == 'O':
+                    dfs(a, b)
+            
+            
+        # top, bottom
+        for i in range(m - 1):
+            dfs(0, i)
+            dfs(n - 1, i)
+        
+        # left, right
+        for i in range(n - 1):
+            dfs(i, 0)
+            dfs(i, m - 1)
+            
+        
+        for i in range(1, n - 1):
+            for j in range(1, m - 1):
+                if not visited[i][j]:
                     board[i][j] = 'X'
+        return board
+        
+        
+            
