@@ -1,44 +1,28 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        n = len(grid)
-        if not n:
-            return -1
-        m = len(grid[0])
-        q = deque([])
         
-        # iterate throught the grid and find a entry with value 2
+        n, m = len(grid), len(grid[0])
+
+        # queue - all starting cells with rotting oranges
+        queue = deque()
         for i in range(n):
             for j in range(m):
                 if grid[i][j] == 2:
-                    q.append((i, j))
-                    
-        
-        res = 0
-        if q:
-            res -=1
-        
-        dx = [-1, 1, 0, 0]
-        dy = [0, 0, -1, 1]
-        while q:
-            res += 1
-            size = len(q)
-            
-            for j in range(size):
-                front = q.popleft()
-                for i in range(4):
-                    a = front[0] + dx[i]
-                    b = front[1] + dy[i]
-                    if a in range(n) and b in range(m) and grid[a][b] == 1:
-                        q.append((a, b))
-                        grid[a][b] = 2
-            
-        
-        
-        for i in range(n):
-            for j in range(m):
-                if grid[i][j] == 1:
-                    return -1
-        return res
-                    
-                    
-                    
+                    queue.append((i, j ,0))
+
+        def neighbors(r, c) -> (int, int):
+            for nr, nc in ((r - 1, c), (r, c - 1), (r + 1, c), (r, c + 1)):
+                if nr in range(n) and nc in range(m):
+                    yield nr, nc
+
+        d = 0
+        while queue:
+            r, c, d = queue.popleft()
+            for nr, nc in neighbors(r, c):
+                if grid[nr][nc] == 1:
+                    grid[nr][nc] = 2
+                    queue.append((nr, nc, d + 1))
+
+        if any(1 in row for row in grid):
+            return -1
+        return d
