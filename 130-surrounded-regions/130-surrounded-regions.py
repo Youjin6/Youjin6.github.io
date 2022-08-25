@@ -11,26 +11,31 @@ class Solution:
         dx = [-1, 1, 0, 0]
         dy = [0, 0, -1, 1]
         
-        def dfs(x, y):
+        def bfs(x, y):
             if visited[x][y] or board[x][y] != 'O':
                 return
             visited[x][y] = True
-            for i in range(4):
-                a = x + dx[i]
-                b = y + dy[i]
-                if a in range(n) and b in range(m) and board[a][b] == 'O':
-                    dfs(a, b)
+            q = deque([(x, y)])
+            while q:
+                front = q.popleft()
+                
+                for i in range(4):
+                    a = front[0] + dx[i]
+                    b = front[1] + dy[i]
+                    if a in range(n) and b in range(m) and board[a][b] == 'O' and not visited[a][b]:
+                        visited[a][b] = True
+                        q.append((a, b))
             
             
         # top, bottom
         for i in range(m):
-            dfs(0, i)
-            dfs(n - 1, i)
+            bfs(0, i)
+            bfs(n - 1, i)
         
         # left, right
         for i in range(n):
-            dfs(i, 0)
-            dfs(i, m - 1)
+            bfs(i, 0)
+            bfs(i, m - 1)
             
         
         for i in range(n):
