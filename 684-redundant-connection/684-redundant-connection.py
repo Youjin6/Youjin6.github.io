@@ -8,10 +8,10 @@ class Solution:
                 p[u] = find(p[u])
             return p[u]
         
-        def union(v1, v2):
-            p[find(v1)] = find(v2)
+        def union(a, b):
+            p[find(a)] = find(b)
             
-        
+            
         for node1, node2 in edges:
             if find(node1) != find(node2):
                 union(node1, node2)
