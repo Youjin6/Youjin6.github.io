@@ -1,20 +1,22 @@
 class Solution:
-    def canFinish(self, numCourses: int, p: List[List[int]]) -> bool:
-        edges = defaultdict(list)
-        indegree = [0] * numCourses
+    def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
+        dic = defaultdict(list)
+        ind = [0] * n
         
-        for info in p:
-            edges[info[1]].append(info[0])
-            indegree[info[0]] += 1
-            
-        q = deque([u for u in range(numCourses) if indegree[u] == 0])
-        visited = 0
+        for [course, pre] in prerequisites:
+            dic[pre].append(course)
+            ind[course] += 1
         
+        q = deque([i for i in range(n) if ind[i] == 0])
+        
+        res = 0
         while q:
-            visited += 1
-            u = q.popleft()
-            for v in edges[u]:
-                indegree[v] -= 1
-                if indegree[v] == 0:
-                    q.append(v)
-        return visited == numCourses
+            res += 1
+            front = q.popleft()
+            for i in dic[front]:
+                ind[i] -= 1
+                if ind[i] == 0:
+                    q.append(i)
+        
+        return res == n
+            
