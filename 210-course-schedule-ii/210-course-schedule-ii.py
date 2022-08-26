@@ -1,33 +1,25 @@
 class Solution:
     def findOrder(self, n: int, prerequisites: List[List[int]]) -> List[int]:
-        dic = collections.defaultdict(list)
-        visited = [0] * n
-        res = []
-        valid = True
+    
+        dic = defaultdict(list)
+        ind = [0] * n
         
         for [course, pre] in prerequisites:
-            dic[course].append(pre)
-            
+            dic[pre].append(course)
+            ind[course] += 1
         
-        def dfs(u):
-            nonlocal valid
-            visited[u] = 1
-            for i in dic[u]:
-                if visited[i] == 0:
-                    dfs(i)
-                    if not valid:
-                        return
-                elif visited[i] == 1:
-                    valid = False
-                    return
-            visited[u] = 2
-            res.append(u)
-            
+        q = deque([i for i in range(n) if ind[i] == 0])
         
-        for i in range(n):
-            if valid and not visited[i]:
-                dfs(i)
+        res = []
+        while q:
+            front = q.popleft()
+            res.append(front)
+            for i in dic[front]:
+                ind[i] -= 1
+                if ind[i] == 0:
+                    q.append(i)
         
-        if valid:
+        if len(res) == n:
             return res
         return []
+            
