@@ -1,7 +1,6 @@
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
         p = list(range(n))
-        print(p)
         
         def find(u):
             if p[u] != u:
@@ -12,14 +11,14 @@ class Solution:
             pa = find(a)
             pb = find(b)
 
-            for i, v in enumerate(p):
-                if v == pa:
-                    p[i] = pb
+            p[pa] = pb
             
             
         for [node1, node2] in edges:
             union(node1, node2)
             
         print(p)
-        count = Counter(p)
-        return len(count)
+        ans = set()
+        for i in p:
+            ans.add(find(i))
+        return len(ans)
