@@ -17,7 +17,6 @@ class Solution:
         for [node1, node2] in edges:
             union(node1, node2)
             
-        print(p)
         ans = set()
         for i in p:
             ans.add(find(i))
