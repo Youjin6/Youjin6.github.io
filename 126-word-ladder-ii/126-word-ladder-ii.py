@@ -1,49 +1,44 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
-        dist = collections.defaultdict(lambda :0)
+        dist = defaultdict(lambda: 0)
         h = set(wordList)
-
         dist[beginWord] = 1
-
-        queue = collections.deque()
-
-        queue.append(beginWord)
-
+        
+        queue = deque([beginWord])
+        
         while queue:
             t = queue.popleft()
-
-            for i in range(len(t)):  # 枚举第i位可能的变化
+            
+            for i in range(len(t)):
                 for c in range(ord('a'), ord('z') + 1):
-                    cur_t = list(t)
-                    c = chr(c)
-                    cur_t[i] = c
-                    cur_t = "".join(cur_t)
-
-                    if cur_t in h and dist[cur_t] == 0:
-                        dist[cur_t] = dist[t] + 1
-                        if cur_t == endWord:
+                    new_word = list(t)
+                    new_word[i] = chr(c)
+                    new_word = ''.join(new_word)
+                    
+                    if new_word in h and dist[new_word] == 0:
+                        dist[new_word] = dist[t] + 1
+                        if new_word == endWord:
                             break
-                        queue.append(cur_t)
-
+                        queue.append(new_word)
+        
         res = []
         path = [endWord]
-
+        
         def dfs(t):
             if t == beginWord:
                 res.append(path[::-1][:])
-
+                
             else:
                 for i in range(len(t)):
                     for c in range(ord('a'), ord('z') + 1):
-                        cur_t = list(t)
-                        c = chr(c)
-                        cur_t[i] = c
-                        cur_t = "".join(cur_t)
-
-                        if dist[cur_t] + 1 == dist[t]:
-                            path.append(cur_t)
-                            dfs(cur_t)
+                        new_word = list(t)
+                        new_word[i] = chr(c)
+                        new_word = ''.join(new_word)     
+                        
+                        if dist[new_word] + 1 == dist[t]:
+                            path.append(new_word)
+                            dfs(new_word)
                             path.pop()
-
         dfs(endWord)
         return res
+                
