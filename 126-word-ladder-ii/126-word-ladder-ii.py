@@ -1,7 +1,7 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
         dist = defaultdict(lambda: 0)
-        # h = set(wordList)
+        h = set(wordList)
         dist[beginWord] = 1
         
         queue = deque([beginWord])
