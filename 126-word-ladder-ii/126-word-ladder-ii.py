@@ -38,6 +38,8 @@ class Solution:
                         path.append(next_word)
                         dfs(next_word)
                         path.pop()
+        if endWord not in dist:
+            return []
         dfs(endWord)
         return res
                 
