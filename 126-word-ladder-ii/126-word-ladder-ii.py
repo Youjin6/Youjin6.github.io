@@ -26,7 +26,7 @@ class Solution:
         
         def dfs(t):
             if t == beginWord:
-                res.append(path[::-1][:])
+                res.append(path[::-1])
                 
             else:
                 for i in range(len(t)):
