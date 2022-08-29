@@ -1,7 +1,7 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
         dist = defaultdict(lambda: 0)
-        h = set(wordList)
+        # h = set(wordList)
         dist[beginWord] = 1
         
         queue = deque([beginWord])
@@ -17,8 +17,8 @@ class Solution:
                     
                     if new_word in wordList and dist[new_word] == 0:
                         dist[new_word] = dist[t] + 1
-                        if new_word == endWord:
-                            break
+                        # if new_word == endWord:
+                        #     break
                         queue.append(new_word)
         
         res = []
