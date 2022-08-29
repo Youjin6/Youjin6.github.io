@@ -1,48 +1,46 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
-        word_bag = set(wordList)
-        if endWord not in word_bag:
+        if endWord not in wordList:
             return []
+        dist = defaultdict(lambda: 0)
+        # h = set(wordList)
+        dist[beginWord] = 1
         
-        word_bag.add(beginWord)
+        queue = deque([beginWord])
         
-        distance = self.bfs(endWord, word_bag)
-        
-        results = []
-        self.dfs(beginWord, endWord, word_bag, distance, [beginWord], results)
-        
-        return results
-    
-    def bfs(self, begin_word, word_bag):
-        queue = [begin_word]
-        distance = {}
-        distance[begin_word] = 0
         while queue:
-            size = len(queue)
-            for _ in range(size):
-                curr_word = queue.pop(0)
-                for next_word in self.get_next_words(curr_word, word_bag):
-                    if next_word not in distance:
-                        distance[next_word] = distance[curr_word] + 1
-                        queue.append(next_word)
-        return distance
-    
-    def dfs(self, curr_word, target, word_bag, distance, path, results):
-        if curr_word == target:
-            results.append(list(path))
-            return
-        for next_word in self.get_next_words(curr_word, word_bag):
-            if distance[next_word] != distance[curr_word] - 1:
-                continue
-            path.append(next_word)
-            self.dfs(next_word, target, word_bag, distance, path, results)
-            path.pop()
-    
-    def get_next_words(self, curr_word, word_bag):
-        next_words = []
-        for i in range(len(curr_word)):
-            for c in list(string.ascii_lowercase):
-                next_word = curr_word[:i] + c + curr_word[i + 1:]
-                if next_word != curr_word and next_word in word_bag:
-                    next_words.append(next_word)
-        return next_words
+            t = queue.popleft()
+            
+            for i in range(len(t)):
+                for c in range(ord('a'), ord('z') + 1):
+                    new_word = list(t)
+                    new_word[i] = chr(c)
+                    new_word = ''.join(new_word)
+                    
+                    if new_word in wordList and dist[new_word] == 0:
+                        dist[new_word] = dist[t] + 1
+                        # if new_word == endWord:
+                        #     break
+                        queue.append(new_word)
+        
+        res = []
+        path = [endWord]
+        
+        def dfs(t):
+            if t == beginWord:
+                res.append(path[::-1][:])
+                
+            else:
+                for i in range(len(t)):
+                    for c in range(ord('a'), ord('z') + 1):
+                        new_word = list(t)
+                        new_word[i] = chr(c)
+                        new_word = ''.join(new_word)     
+                        
+                        if dist[new_word] + 1 == dist[t]:
+                            path.append(new_word)
+                            dfs(new_word)
+                            path.pop()
+        dfs(endWord)
+        return res
+                
