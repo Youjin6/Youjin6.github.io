@@ -1,29 +1,24 @@
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        dist = collections.defaultdict(lambda :0)
-        h = set(wordList)
-
-        dist[beginWord] = 1
-
-        queue = collections.deque()
-        queue.append(beginWord)
-
-        while queue:
-            t = queue.popleft()
-
-            for i in range(len(t)):
-                for c in range(ord('a'), ord('z')+1):
-                    cur_t = list(t)
-                    c = chr(c)
-                    cur_t[i] = c
-                    cur_t = "".join(cur_t)
-
-                    if cur_t in h and dist[cur_t] == 0:
-                        dist[cur_t] = dist[t] + 1
-                        if cur_t == endWord:
-                            return dist[cur_t]
-
-                        queue.append(cur_t)
-
-
+        if endWord not in wordList:
+            return 0
+        s = set(wordList)
+        distance = defaultdict(lambda: 0)
+        q = deque([beginWord])
+        distance[beginWord] = 1
+        
+        while q:
+            word = q.popleft()
+            for i in range(len(word)):
+                for c in range(ord('a'), ord('z') + 1):
+                    new_word = list(word)
+                    new_word[i] = chr(c)
+                    new_word = ''.join(new_word)
+                    
+                    if new_word in s and distance[new_word] == 0:
+                        distance[new_word] = distance[word] + 1
+                        
+                        if new_word == endWord:
+                            return distance[new_word]
+                        q.append(new_word)
         return 0
