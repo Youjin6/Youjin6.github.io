@@ -1,14 +1,15 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        @lru_cache
+        record = [None] * (n + 1)
+        record[0] = 1
         def process(remain):
-            if remain == 0:
-                return 1
+            if record[remain]:
+                return record[remain]
             elif remain < 0:
                 return 0
             else:
-                return process(remain - 1) + process(remain - 2)
-    
+                record[remain] =  process(remain - 1) + process(remain - 2)
+                return record[remain]
         return process(n)
         
     
