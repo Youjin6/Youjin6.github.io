@@ -1,25 +1,36 @@
 class Solution:
-    def init(self, s):
-        res = '#'
-        for i in s:
-            res += i
-            res += '#'
-        return res
-    
     def longestPalindrome(self, s: str) -> str:
-        string = self.init(s)    
 
-        res = ''
-        for i in range(len(string)):
-            l = i - 1
-            r = i + 1
-            while l >= 0 and r < len(string) and string[l] == string[r]:
-                l -= 1
-                r += 1
-            if len(res) < r - l - 1:
-                res = string[l + 1: r]
-        print(res)
-        a = res.split('#')
-        a = ''.join(a)
-        return a
-    
+        
+        n = len(s)
+        if n < 2:
+            return s
+        longest = 1
+        start = 0
+        
+        dp = [[False] * n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+            
+        for L in range(2, n + 1):
+            # left
+            for i in range(n):
+                # j - i + 1 = len -> j = L + i - 1
+                j = L + i - 1
+                if j >= n:
+                    break
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                
+                # j - i + 1 < 4
+                else:
+                    if j - i + 1 < 4:
+                        dp[i][j] = True
+                    else:
+                        dp[i][j] = dp[i + 1][j - 1]
+                    
+                if dp[i][j] and j - i + 1 > longest:
+                    start = i
+                    longest = j - i + 1
+        return s[start: start + longest]
+        
