@@ -14,7 +14,7 @@ class Solution:
             
         for L in range(2, n + 1):
             # left
-            for i in range(n):
+            for i in range(n - L + 1):
                 # j - i + 1 = len -> j = L + i - 1
                 j = L + i - 1
                 if j >= n:
