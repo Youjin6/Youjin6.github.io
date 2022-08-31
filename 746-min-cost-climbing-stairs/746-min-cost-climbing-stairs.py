@@ -6,7 +6,6 @@ class Solution:
         f[1] = cost[1]
         
         for i in range(2, n):
-            f[i] = min(f[i - 1], f[i - 2]) + cost[i]
+            f[i] = min(f[i -1], f[i - 2]) + cost[i]
         
-        return min(f[n - 1], f[n - 2])
-            
+        return min(f[n - 1], f[n -2])
