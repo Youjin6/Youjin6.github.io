@@ -1,26 +1,20 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
-        memo = [None] * (len(s) + 1)
+        if not s:
+            return 0
+        n = len(s)
+        dp = [0] * (n + 1)
         
+        dp[n] = 1
+
         
-        def process(cur):
-            # base case
-            if cur == len(s):
-                return 1
-            # condition 
-            if s[cur] == '0':
-                return 0
-            if memo[cur]:
-                return memo[cur]
-            # other case: single digit
+        for i in reversed(range(n)):
+            if s[i] != '0':
             
-            res = process(cur + 1)
+                res = dp[i + 1]
+                if i + 1 < len(s) and int(s[i: i + 2]) in range(10, 27):
+                    res += dp[i + 2]
             
-            # other case: double digit
-            if cur + 1 < len(s) and int(s[cur: cur + 2]) in range(1, 27):
-                res += process(cur + 2)
-            memo[cur] = res
-            return res
-        
-        return process(0)
+                dp[i] = res
             
+        return dp[0]
