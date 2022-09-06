@@ -1,14 +1,23 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        s = ' ' + s
+        ULL = 1 << 64
+        P = 131
+        h = {}
+        for word in wordDict:
+            t = 0
+            for c in word:
+                t = (t * P + ord(c)) % ULL
+            h[t] = 1
+
         n = len(s)
         f = [False] * (n + 1)
         f[0] = True
-        
-        for i in range(1, n + 1):
-            for j in range(1, i + 1):
-                if f[j - 1] and s[j : i + 1] in wordDict:
-                    f[i] = True
-                    break
-        
+        s = ' ' + s
+        for i in range(n):
+            if f[i]:
+                t = 0
+                for j in range(i + 1, n + 1):
+                    t = (t * P + ord(s[j])) % ULL
+                    if t in h:
+                        f[j] = True
         return f[n]
