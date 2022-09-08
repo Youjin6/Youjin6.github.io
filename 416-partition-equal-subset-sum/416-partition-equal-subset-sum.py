@@ -11,7 +11,7 @@ class Solution:
         
         for i in nums:
             for j in reversed(range(i, s + 1)):
-                f[j] |= f[j - i]
+                f[j] = f[j] or f[j - i]
         
         
         return f[s]
