@@ -1,26 +1,26 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        low = 0
-        high = 0
+        lower = 0
+        upper = 0
         
         for c in s:
             if c == '(':
-                low += 1
-                high += 1
+                lower += 1
+                upper += 1
             
             elif c == ')':
-                low -= 1
-                high -= 1
+                lower -= 1
+                upper -= 1
             
             else:
-                low -= 1
-                high += 1
-            
-            low = max(0, low)
-            if low > high:
+                lower -= 1
+                upper += 1
+                
+            lower = max(0, lower)
+            if lower > upper:
                 return False
         
-        if low == 0:
+        if lower == 0:
             return True
         else:
             return False
