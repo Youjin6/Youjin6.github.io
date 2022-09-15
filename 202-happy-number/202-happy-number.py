@@ -1,6 +1,6 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def get_next(x):
+        def get(x):
             res = 0
             while x:
                 res += (x % 10) ** 2
@@ -8,11 +8,11 @@ class Solution:
                 
             return res
         
-        fast = get_next(n)
+        fast = get(n)
         slow = n
         
         while fast != slow:
-            fast = get_next(get_next(fast))
-            slow = get_next(slow)
+            fast = get(get(fast))
+            slow = get(slow)
         
         return fast == 1
