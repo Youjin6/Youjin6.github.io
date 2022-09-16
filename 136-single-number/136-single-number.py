@@ -1,10 +1,7 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        count = {}
+        res = 0
         for n in nums:
-            count[n] = count.get(n, 0) + 1
+            res ^= n
         
-        for k,v in count.items():
-            if v == 1:
-                return k
-            
+        return res
