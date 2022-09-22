@@ -11,9 +11,14 @@ class Solution:
             return None
         
         root = TreeNode(preorder[0])
-        head = inorder.index(preorder[0])
-        root.left = self.buildTree(preorder[1:head + 1], inorder[: head])
-        root.right = self.buildTree(preorder[head + 1:], inorder[head + 1:])
+        index_head = inorder.index(root.val)
+        root.left = self.buildTree(preorder[1: index_head + 1], inorder[: index_head])
+        root.right = self.buildTree(preorder[index_head + 1:], inorder[index_head + 1 :])
         
         return root
 
+    """
+    pre: head left right: [3]  9   20 15 7
+    in.: left head right: 9   [3]  15 20 7
+    
+    """
