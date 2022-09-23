@@ -1,29 +1,27 @@
 class Solution:
-    def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         dic = defaultdict(list)
-        res = []
-        valid = True
-        visited = [0] * n
+        queue = deque([])
+        indegree = [0] * numCourses
         
-        for [course, pre] in prerequisites:
+        for course, pre in prerequisites:
             dic[pre].append(course)
+            indegree[course] += 1
+        
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                queue.append(i)
+        
+        res = 0
+        while queue:
+            front = queue.popleft()
+            res += 1
+            for i in dic[front]:
+                indegree[i] -= 1
+                if indegree[i] == 0:
+                    queue.append(i)
+        
+        return res == numCourses
             
-        def dfs(u: int):
-            nonlocal valid
-            visited[u] = 1
-            for i in dic[u]:
-                if visited[i] == 0:
-                    dfs(i)
-                elif visited[i] == 1:
-                    valid = False
-                    return
-            visited[u] = 2
-            res.append(u)
         
-        for i in range(n):
-            if valid and visited[i] == 0:
-                dfs(i)
-                if not valid:
-                    return False
         
-        return valid
