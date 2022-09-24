@@ -1,17 +1,23 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        
+        """
+        last position i appear, dp[i - 1] + 1
+        """
         if not s:
             return 0
-        count = {}
-        ans = 0
-        j = 0
+        dic = [-1 for _ in range(256)]
         
-        for i in range(len(s)):
-            count[s[i]] = count.get(s[i], 0) + 1
-            while count[s[i]] > 1:
-                count[s[j]] -= 1
-                j += 1
-            ans = max(ans, i - j + 1)
+        dic[ord(s[0])] = 0
+        pre = 1
+        res = 1
+        for i in range(1, len(s)):
+            p1 = i - dic[ord(s[i])]
+            p2 = pre + 1
+            pre = min(p1, p2)
+            res = max(pre, res)
+            dic[ord(s[i])] = i
             
         
-        return ans
+        return res
