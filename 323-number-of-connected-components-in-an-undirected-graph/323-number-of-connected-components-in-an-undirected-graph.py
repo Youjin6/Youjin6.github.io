@@ -2,22 +2,20 @@ class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
         p = list(range(n))
         
-        def find(u):
-            if p[u] != u:
-                p[u] = find(p[u])
-            return p[u]
+        def find(node):
+            if p[node] != node:
+                p[node] = find(p[node])
+            return p[node]
         
-        def union(a, b):
-            pa = find(a)
-            pb = find(b)
-
-            p[pa] = pb
-            
-            
-        for [node1, node2] in edges:
-            union(node1, node2)
-            
+        def union(node1, node2):
+            p[find(node1)] = find(node2)
+        
+        
+        for node1, node2 in edges:
+            if find(node1) != find(node2):
+                union(node1, node2)
+        
         ans = set()
-        for i in p:
-            ans.add(find(i))
+        for n in p:
+            ans.add(find(n))
         return len(ans)
