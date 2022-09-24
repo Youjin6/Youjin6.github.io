@@ -8,8 +8,8 @@ class Solution:
             bucket[times].append(nums)
         
         for i in reversed(bucket):
-            if i:
-                for num in i:
-                    ans.append(num)
-                    if len(ans) == k:
-                        return ans
+
+            for num in i:
+                ans.append(num)
+                if len(ans) == k:
+                    return ans
