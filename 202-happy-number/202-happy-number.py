@@ -1,18 +1,16 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def get(x):
+        def add(n):
             res = 0
-            while x:
-                res += (x % 10) ** 2
-                x //= 10
-                
+            while n:
+                res += (n % 10) ** 2
+                n //= 10
             return res
         
-        fast = get(n)
+        fast = add(n)
         slow = n
         
         while fast != slow:
-            fast = get(get(fast))
-            slow = get(slow)
-        
+            fast = add(add(fast))
+            slow = add(slow)
         return fast == 1
