@@ -4,15 +4,15 @@ class Solution:
             return 0
         
         heap = []
-        heapq.heapify(heap)
+        heapify(heap)
         res = 0
         
         intervals.sort()
         for i in range(len(intervals)):
             while heap and intervals[i][0] >= heap[0]:
-                heapq.heappop(heap)
+                heappop(heap)
             
-            heapq.heappush(heap, intervals[i][1])
+            heappush(heap, intervals[i][1])
             res = max(res, len(heap))
             
         
