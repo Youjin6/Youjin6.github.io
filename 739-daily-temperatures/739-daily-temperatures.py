@@ -1,10 +1,10 @@
 class Solution:
-    def dailyTemperatures(self, temp: List[int]) -> List[int]:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
         stack = []
-        n = len(temp)
+        n = len(temperatures)
         ans = [None] * n
         for i in range(n):
-            while stack and temp[i] > temp[stack[-1]]:
+            while stack and temperatures[i] > temperatures[stack[-1]]:
                 t = stack.pop()
                 ans[t] = i - t
             
