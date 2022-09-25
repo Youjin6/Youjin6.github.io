@@ -13,6 +13,6 @@ class Solution:
                 
             if j == n:
                 return i
-            i = i + j + 1
+            i += j + 1
         
         return -1
