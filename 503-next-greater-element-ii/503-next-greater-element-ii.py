@@ -1,19 +1,19 @@
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         n = len(nums)
-        nums.extend(nums[:n - 1])
-        
-        ans = [-1] * (2 * n - 1)
+        nums.extend(nums[:-1])
+        ans = [0] * len(nums)
         stack = []
         
-        for i in range(2 * n - 1):
+        for i in range(len(nums)):
             while stack and nums[i] > nums[stack[-1]]:
-                t = stack.pop()
-                ans[t] = nums[i]
-            stack.append(i)
+                front = stack.pop()
+                ans[front] = nums[i]
             
+            stack.append(i)
+        
         while stack:
-            t = stack.pop()
-            ans[t] = -1
+            front = stack.pop()
+            ans[front] = -1
         
         return ans[:n]
