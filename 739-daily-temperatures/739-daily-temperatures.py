@@ -2,16 +2,17 @@ class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
         stack = []
         n = len(temperatures)
-        ans = [None] * n
+        
+        ans = [0] * n
+        
         for i in range(n):
             while stack and temperatures[i] > temperatures[stack[-1]]:
-                t = stack.pop()
-                ans[t] = i - t
-            
+                front = stack.pop()
+                ans[front] = i - front
             stack.append(i)
         
         while stack:
-            t = stack.pop()
-            ans[t] = 0
+            front = stack.pop()
+            ans[front] = 0
         
         return ans
