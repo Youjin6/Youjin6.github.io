@@ -5,5 +5,5 @@ class Solution:
             if n & 1:
                 count += 1
             n >>= 1
-            
+        
         return count
