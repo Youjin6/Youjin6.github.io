@@ -1,15 +1,7 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        n = len(nums)
-        bucket = [[] for _ in range(n + 1)]
-        ans = []
-        count = Counter(nums)
-        for nums, times in count.items():
-            bucket[times].append(nums)
+        counter = Counter(nums)
+        res =[a[0] for a in counter.most_common(k)]
+        return res
         
-        for i in reversed(bucket):
-
-            for num in i:
-                ans.append(num)
-                if len(ans) == k:
-                    return ans
+        
