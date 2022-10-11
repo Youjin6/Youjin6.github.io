@@ -1,5 +1,9 @@
 class Solution:
-    def strStr(self, haystack: str, needle: str) -> int:
-        if needle not in haystack:
-            return -1
-        return haystack.index(needle)
+    def strStr(self, s: str, t: str) -> int:
+        n = len(s)
+        m = len(t)
+        for i in range(len(s)):
+            if s[i : i + m] == t:
+                return i
+        
+        return -1
