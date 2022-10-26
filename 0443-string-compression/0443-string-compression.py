@@ -4,7 +4,7 @@ class Solution:
         n = len(chars)
         c = chars[0]
         
-        while l< n  and r < n:
+        while r < n:
             count = 0
             while r < n and chars[r] == c:
                 r += 1
