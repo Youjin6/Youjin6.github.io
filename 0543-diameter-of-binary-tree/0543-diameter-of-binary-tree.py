@@ -10,14 +10,13 @@ class Solution:
             nonlocal ans
             if not root:
                 return 0
-            
             left = dfs(root.left)
             right = dfs(root.right)
             
             ans = max(ans, left + right)
             
             return max(left, right) + 1
-        
         ans = 0
         dfs(root)
         return ans
+        
